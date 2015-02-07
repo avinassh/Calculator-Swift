@@ -44,12 +44,10 @@ class ViewController: UIViewController {
             enter()
         }
         switch operation {
-            case "÷": performOperation(divide)
-            case "×": performOperation(multiply)
-            case "−": performOperation(subtract)
-            case "+": performOperation({(op1, op2) in
-                return op1 + op2
-            })
+            case "÷": performOperation({(op1, op2) in op2 / op1})
+            case "×": performOperation({(op1, op2) in op1 * op2})
+            case "−": performOperation({(op1, op2) in op2 - op1})
+            case "+": performOperation({(op1, op2) in op1 + op2})
             default: break
         }
     }
@@ -59,19 +57,6 @@ class ViewController: UIViewController {
             displayValue = operation(operandStack.removeLast(), operandStack.removeLast())
             enter()
         }
-    }
-    
-    
-    func subtract(op1: Double, op2: Double) -> Double {
-        return op2 - op1
-    }
-    
-    func multiply(op1: Double, op2: Double) -> Double {
-        return op1 * op2
-    }
-    
-    func divide(op1: Double, op2: Double) -> Double {
-        return op2 / op1
     }
     
     @IBAction func enter() {
