@@ -13,7 +13,17 @@ class ViewController: UIViewController {
     @IBOutlet weak var display: UILabel!
 
     var userIsInTheMiddleOfTypingANumber = false
-    
+    //var operands = Array<Double>()
+    var operandStack = [Double]()
+    var displayValue: Double {
+        get {
+            return NSNumberFormatter().numberFromString(display.text!)!.doubleValue
+        }
+        set {
+            display.text = "\(newValue)"
+            userIsInTheMiddleOfTypingANumber = false
+        }
+    }
     
     @IBAction func appendDigit(sender: UIButton) {
         
@@ -28,6 +38,47 @@ class ViewController: UIViewController {
 
     }
     
+    @IBAction func operrate(sender: UIButton) {
+        let operation = sender.currentTitle!
+        
+        if userIsInTheMiddleOfTypingANumber {
+            enter()
+        }
+        
+        switch operation {
+            case "÷":
+                if operandStack.count >= 2 {
+                    displayValue = operandStack.removeLast() / operandStack.removeLast()
+                    enter()
+            }
+            
+            case "×":
+                if operandStack.count >= 2 {
+                    displayValue = operandStack.removeLast() * operandStack.removeLast()
+                    enter()
+            }
+            
+            case "−":
+                if operandStack.count >= 2 {
+                    displayValue = operandStack.removeLast() - operandStack.removeLast()
+                    enter()
+            }
+            
+            case "+":
+                if operandStack.count >= 2 {
+                    displayValue = operandStack.removeLast() + operandStack.removeLast()
+                    enter()
+                }
+            default: break
+        }
+    }
+    
+    @IBAction func enter() {
+        userIsInTheMiddleOfTypingANumber = false
+        operandStack.append(displayValue)
+        println(operandStack)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -37,6 +88,7 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
 
 
 }
