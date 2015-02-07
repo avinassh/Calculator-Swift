@@ -40,37 +40,39 @@ class ViewController: UIViewController {
     
     @IBAction func operrate(sender: UIButton) {
         let operation = sender.currentTitle!
-        
         if userIsInTheMiddleOfTypingANumber {
             enter()
         }
-        
         switch operation {
-            case "÷":
-                if operandStack.count >= 2 {
-                    displayValue = operandStack.removeLast() / operandStack.removeLast()
-                    enter()
-            }
-            
-            case "×":
-                if operandStack.count >= 2 {
-                    displayValue = operandStack.removeLast() * operandStack.removeLast()
-                    enter()
-            }
-            
-            case "−":
-                if operandStack.count >= 2 {
-                    displayValue = operandStack.removeLast() - operandStack.removeLast()
-                    enter()
-            }
-            
-            case "+":
-                if operandStack.count >= 2 {
-                    displayValue = operandStack.removeLast() + operandStack.removeLast()
-                    enter()
-                }
+            case "÷": performOperation(divide)
+            case "×": performOperation(multiply)
+            case "−": performOperation(subtract)
+            case "+": performOperation(add)
             default: break
         }
+    }
+    
+    func performOperation(operation: (Double, Double) -> Double) {
+        if operandStack.count >= 2 {
+            displayValue = operation(operandStack.removeLast(), operandStack.removeLast())
+            enter()
+        }
+    }
+    
+    func add(op1: Double, op2: Double) -> Double {
+        return op1 + op2
+    }
+    
+    func subtract(op1: Double, op2: Double) -> Double {
+        return op2 - op1
+    }
+    
+    func multiply(op1: Double, op2: Double) -> Double {
+        return op1 * op2
+    }
+    
+    func divide(op1: Double, op2: Double) -> Double {
+        return op2 / op1
     }
     
     @IBAction func enter() {
