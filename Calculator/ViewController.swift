@@ -47,7 +47,7 @@ class ViewController: UIViewController {
             case "÷": performOperation(divide)
             case "×": performOperation(multiply)
             case "−": performOperation(subtract)
-            case "+": performOperation({(op1: Double, op2: Double) -> Double in
+            case "+": performOperation({(op1, op2) in
                 return op1 + op2
             })
             default: break
