@@ -44,10 +44,10 @@ class ViewController: UIViewController {
             enter()
         }
         switch operation {
-            case "÷": performOperation({(op1, op2) in op2 / op1})
-            case "×": performOperation({(op1, op2) in op1 * op2})
-            case "−": performOperation({(op1, op2) in op2 - op1})
-            case "+": performOperation({(op1, op2) in op1 + op2})
+            case "÷": performOperation({ $1 / $0 })
+            case "×": performOperation({ $1 * $0 })
+            case "−": performOperation({ $1 - $0 })
+            case "+": performOperation({ $1 + $0 })
             default: break
         }
     }
@@ -75,7 +75,5 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-
 }
 
