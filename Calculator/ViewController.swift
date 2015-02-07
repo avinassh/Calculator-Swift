@@ -10,6 +10,24 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var display: UILabel!
+
+    var userIsInTheMiddleOfTypingANumber = false
+    
+    
+    @IBAction func appendDigit(sender: UIButton) {
+        
+        if userIsInTheMiddleOfTypingANumber {
+            display.text = display.text! + sender.currentTitle!
+        }
+        else {
+            display.text = sender.currentTitle!
+            userIsInTheMiddleOfTypingANumber = true
+        }
+        
+
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
