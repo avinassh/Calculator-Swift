@@ -49,7 +49,7 @@ class ViewController: UIViewController {
             case "−": performOperation({ $1 - $0 })
             case "+": performOperation({ $1 + $0 })
             case "√": performOperation({ sqrt($0) })
-            case "x²": performOperation({ (op1) in op1 * op1 })
+            case "x²": performOperation({ $0 * $0 })
             default: break
         }
     }
