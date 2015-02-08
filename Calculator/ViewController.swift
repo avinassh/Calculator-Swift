@@ -29,11 +29,13 @@ class ViewController: UIViewController {
     @IBAction func appendDigit(sender: UIButton) {
         let digit = sender.currentTitle!
 
-        if digit  == "." && userHasEnteredADot == true {
-            return
-        }        
-        if digit  == "." && userHasEnteredADot == false {
-            userHasEnteredADot = true
+        if digit == "." {
+            if userHasEnteredADot {
+                return
+            }
+            else {
+                userHasEnteredADot = true
+            }
         }
         
         if userIsInTheMiddleOfTypingANumber {
