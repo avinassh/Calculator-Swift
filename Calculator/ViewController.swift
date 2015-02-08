@@ -54,12 +54,12 @@ class ViewController: UIViewController {
             enter()
         }
         switch operation {
-            case "÷": performOperation({ $1 / $0 })
-            case "×": performOperation({ $1 * $0 })
-            case "−": performOperation({ $1 - $0 })
-            case "+": performOperation({ $1 + $0 })
-            case "√": performOperation({ sqrt($0) })
-            case "x²": performOperation({ $0 * $0 })
+            case "÷": performOperation() { $1 / $0 }
+            case "×": performOperation() { $1 * $0 }
+            case "−": performOperation() { $1 - $0 }
+            case "+": performOperation() { $1 + $0 }
+            case "√": performOperation() { sqrt($0) }
+            case "x²": performOperation() { $0 * $0 }
             default: break
         }
     }
