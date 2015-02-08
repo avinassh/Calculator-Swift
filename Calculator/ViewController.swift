@@ -17,16 +17,16 @@ class ViewController: UIViewController {
     var userHasEnteredADot = false
     //var operands = Array<Double>()
     var operandStack = [Double]()
-    var displayValue: Double {
+    var displayValue: Double? {
         get {
             let text = display.text!
             if text == "π" {
                 return M_PI
             }
-            return NSNumberFormatter().numberFromString(text)!.doubleValue
+            return NSNumberFormatter().numberFromString(display.text!)!.doubleValue
         }
         set {
-            display.text = "\(newValue)"
+            display.text = "\(newValue!)"
             userIsInTheMiddleOfTypingANumber = false
         }
     }
@@ -100,7 +100,7 @@ class ViewController: UIViewController {
     @IBAction func enter() {
         userIsInTheMiddleOfTypingANumber = false
         userHasEnteredADot = false
-        operandStack.append(displayValue)
+        operandStack.append(displayValue!)
         history.text! += display.text! + "|"
         println(operandStack)
     }
@@ -116,10 +116,14 @@ class ViewController: UIViewController {
     @IBAction func backspace() {
         if countElements(display.text!) > 0 {
             display.text = dropLast(display.text!)
-            if display.text!.isEmpty {
-                userIsInTheMiddleOfTypingANumber = false
-                display.text = "0"
-            }
+            clearDisplay()
+        }
+    }
+    
+    func clearDisplay() {
+        if display.text!.isEmpty {
+            userIsInTheMiddleOfTypingANumber = false
+            display.text = "0"
         }
     }
     
