@@ -105,6 +105,14 @@ class ViewController: UIViewController {
         println(operandStack)
     }
     
+    @IBAction func clear() {
+        history.text = "history: "
+        display.text = "0"
+        operandStack = [Double]()
+        userIsInTheMiddleOfTypingANumber = false
+        userHasEnteredADot = false
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
