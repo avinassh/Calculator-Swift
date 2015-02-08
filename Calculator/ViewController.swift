@@ -114,14 +114,12 @@ class ViewController: UIViewController {
     }
     
     @IBAction func backspace() {
-        var displayArray = Array(display.text!)
-        if displayArray.count > 0 {
-            displayArray.removeLast()
-            if displayArray.isEmpty {
-                displayArray.append("0")
+        if countElements(display.text!) > 0 {
+            display.text = dropLast(display.text!)
+            if display.text!.isEmpty {
                 userIsInTheMiddleOfTypingANumber = false
+                display.text = "0"
             }
-            display.text = String(displayArray)
         }
     }
     
