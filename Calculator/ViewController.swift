@@ -11,7 +11,8 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var display: UILabel!
-
+    @IBOutlet weak var history: UILabel!
+    
     var userIsInTheMiddleOfTypingANumber = false
     var userHasEnteredADot = false
     //var operands = Array<Double>()
@@ -64,6 +65,7 @@ class ViewController: UIViewController {
     
     @IBAction func operrate(sender: UIButton) {
         let operation = sender.currentTitle!
+        history.text! += operation + "|"
         if userIsInTheMiddleOfTypingANumber {
             enter()
         }
@@ -99,6 +101,7 @@ class ViewController: UIViewController {
         userIsInTheMiddleOfTypingANumber = false
         userHasEnteredADot = false
         operandStack.append(displayValue)
+        history.text! += display.text! + "|"
         println(operandStack)
     }
     
