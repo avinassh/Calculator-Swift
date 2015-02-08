@@ -113,6 +113,19 @@ class ViewController: UIViewController {
         userHasEnteredADot = false
     }
     
+    @IBAction func backspace() {
+        var displayArray = Array(display.text!)
+        if displayArray.count > 0 {
+            displayArray.removeLast()
+            if displayArray.isEmpty {
+                displayArray.append("0")
+                userIsInTheMiddleOfTypingANumber = false
+            }
+            display.text = String(displayArray)
+        }
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
