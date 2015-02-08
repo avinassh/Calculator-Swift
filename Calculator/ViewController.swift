@@ -28,7 +28,17 @@ class ViewController: UIViewController {
     
     @IBAction func appendDigit(sender: UIButton) {
         let digit = sender.currentTitle!
-
+        if digit == "π" {
+            if userIsInTheMiddleOfTypingANumber {
+                return
+            }
+            else {
+                display.text = "\(M_PI)"
+                enter()
+                return
+            }
+        }
+        
         if digit == "." {
             if userHasEnteredADot {
                 return
@@ -60,6 +70,9 @@ class ViewController: UIViewController {
             case "+": performOperation() { $1 + $0 }
             case "√": performOperation() { sqrt($0) }
             case "x²": performOperation() { $0 * $0 }
+            case "sin": performOperation() { sin($0) }
+            case "cos": performOperation() { cos($0) }
+            case "tan": performOperation() { tan($0) }
             default: break
         }
     }
