@@ -18,7 +18,11 @@ class ViewController: UIViewController {
     var operandStack = [Double]()
     var displayValue: Double {
         get {
-            return NSNumberFormatter().numberFromString(display.text!)!.doubleValue
+            let text = display.text!
+            if text == "π" {
+                return M_PI
+            }
+            return NSNumberFormatter().numberFromString(text)!.doubleValue
         }
         set {
             display.text = "\(newValue)"
@@ -33,7 +37,7 @@ class ViewController: UIViewController {
                 return
             }
             else {
-                display.text = "\(M_PI)"
+                display.text = digit
                 enter()
                 return
             }
