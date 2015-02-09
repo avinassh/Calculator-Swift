@@ -10,7 +10,7 @@ import Foundation
 
 class CalculatorBrain {
     
-    enum Op {
+    private enum Op {
         case Operand(Double)
         case UnaryOperation(String, Double -> Double)
         case BinaryOperation(String, (Double, Double) -> Double)
@@ -18,18 +18,18 @@ class CalculatorBrain {
     // Alternatives:
     // var opStack: Array<Op> = Array<Op>()
     // var opStack = Array<Op>()
-    var opStack = [Op]()
+    private var opStack = [Op]()
     // Alternatives:
     // var knownOps = Dictionary<String, Op>()
-    var knownOps = [String: Op]()
+    private var knownOps = [String: Op]()
     
     // init does not require func keyword
     init() {
-        knownOps["+"] = Op.BinaryOperation("+") { $1 + $0 }
+        knownOps["+"] = Op.BinaryOperation("+", +)
         knownOps["−"] = Op.BinaryOperation("−") { $1 - $0 }
-        knownOps["×"] = Op.BinaryOperation("×") { $1 * $0 }
+        knownOps["×"] = Op.BinaryOperation("×", *)
         knownOps["÷"] = Op.BinaryOperation("÷") { $1 / $0 }
-        knownOps["√"] = Op.UnaryOperation("√") { sqrt($0)}
+        knownOps["√"] = Op.UnaryOperation("√", sqrt)
     }
     
     func pushOperand(operand: Double) {
@@ -37,6 +37,47 @@ class CalculatorBrain {
     }
     
     func performOperation(symbol: String) {
+        if let operation = knownOps[symbol] {
+            // type of operation is Optional Op (CalculatorBrain.Op?)
+            opStack.append(operation)
+        }
+    }
+    
+    func evaluate() -> Double? {
+        let (result, _) = evaluate(opStack)
+        return result
+    }
+    
+    private func evaluate(ops: [Op]) -> (result: Double?, remainingOps: [Op]) {
         
+        if !ops.isEmpty {
+            var remainingOps = ops
+            let op = remainingOps.removeLast()
+            switch op {
+            case Op.Operand(let operand):
+                return (operand, remainingOps)
+            case Op.UnaryOperation(_, let operation):
+                let operandEvaluation = evaluate(remainingOps)
+                // following might work:
+                //return (operation(operandEvaluation.result!), operandEvaluation.remainingOps)
+                // however if result is nil, exception will be thrown and 
+                // crash our app
+                if let operand = operandEvaluation.result {
+                    return (operation(operand), operandEvaluation.remainingOps)
+                }
+                // now, in case result is nil, the if block will fail and // 
+                // control will come out and return (nil, ops)
+            
+            case Op.BinaryOperation(_, let operation):
+                let op1Evalution = evaluate(remainingOps)
+                if let operand1 = op1Evalution.result {
+                    let op2Evalution = evaluate(op1Evalution.remainingOps)
+                    if let operand2 = op2Evalution.result {
+                        return (operation(operand1, operand2), op2Evalution.remainingOps)
+                    }
+                }
+            }
+        }
+        return (nil, ops)
     }
 }
