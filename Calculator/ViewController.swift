@@ -15,8 +15,9 @@ class ViewController: UIViewController {
     
     var userIsInTheMiddleOfTypingANumber = false
     var userHasEnteredADot = false
-    //var operands = Array<Double>()
-    var operandStack = [Double]()
+    
+    var brain = CalculatorBrain()
+    
     var displayValue: Double? {
         get {
             let text = display.text!
@@ -66,53 +67,43 @@ class ViewController: UIViewController {
     @IBAction func operrate(sender: UIButton) {
         if userIsInTheMiddleOfTypingANumber {
             enter()
-        }        
+        }
         if let operation = sender.currentTitle {
+            // history needs to be improved
+            // for example, it enters operations into display even though
+            // they are not getting evaluated 
+            // enter 9 enter + enter + enter 3 etc.
             history.text! += operation + "|"
-            switch operation {
-                case "÷": performOperation() { $1 / $0 }
-                case "×": performOperation() { $1 * $0 }
-                case "−": performOperation() { $1 - $0 }
-                case "+": performOperation() { $1 + $0 }
-                case "√": performOperation() { sqrt($0) }
-                case "x²": performOperation() { $0 * $0 }
-                case "sin": performOperation() { sin($0) }
-                case "cos": performOperation() { cos($0) }
-                case "tan": performOperation() { tan($0) }
-                default: break
+            if let result = brain.performOperation(operation) {
+                displayValue = result
             }
-        }
-    }
-    
-    func performOperation(operation: (Double, Double) -> Double) {
-        if operandStack.count >= 2 {
-            displayValue = operation(operandStack.removeLast(), operandStack.removeLast())
-            enter()
-        }
-    }
-    
-    func performOperation(operation: (Double) -> Double) {
-        if operandStack.count >= 1 {
-            displayValue = operation(operandStack.removeLast())
-            enter()
+            else {
+                displayValue = 0
+            }
         }
     }
     
     @IBAction func enter() {
         userIsInTheMiddleOfTypingANumber = false
         userHasEnteredADot = false
-        operandStack.append(displayValue!)
         history.text! += display.text! + "|"
-        println(operandStack)
+        // needs unwrapping of optional displayValue! and a if block?
+        // change it later
+        if let result = brain.pushOperand(displayValue!) {
+            displayValue = result
+        }
+        else {
+            displayValue = 0
+        }
     }
     
     @IBAction func clear() {
         history.text = "history: "
         display.text = "0"
-        operandStack = [Double]()
         userIsInTheMiddleOfTypingANumber = false
         userHasEnteredADot = false
         println("Calculator has been reset")
+        brain = CalculatorBrain()
     }
     
     @IBAction func backspace() {

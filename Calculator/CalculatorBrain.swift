@@ -32,19 +32,21 @@ class CalculatorBrain {
         knownOps["√"] = Op.UnaryOperation("√", sqrt)
     }
     
-    func pushOperand(operand: Double) {
+    func pushOperand(operand: Double) -> Double? {
         opStack.append(Op.Operand(operand))
+        return evaluate()
     }
     
-    func performOperation(symbol: String) {
+    func performOperation(symbol: String) -> Double? {
         if let operation = knownOps[symbol] {
             // type of operation is Optional Op (CalculatorBrain.Op?)
             opStack.append(operation)
         }
+        return evaluate()
     }
     
     func evaluate() -> Double? {
-        let (result, _) = evaluate(opStack)
+        let (result, remainder) = evaluate(opStack)
         return result
     }
     
