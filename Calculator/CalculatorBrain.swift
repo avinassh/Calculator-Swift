@@ -43,6 +43,8 @@ class CalculatorBrain {
         learnOp(Op.BinaryOperation("×", *))
         learnOp(Op.BinaryOperation("÷") { $1 / $0 })
         learnOp(Op.UnaryOperation("√", sqrt))
+        learnOp(Op.UnaryOperation("cos", cos))
+        learnOp(Op.UnaryOperation("sin", sin))
     }
     
     func pushOperand(operand: Double) -> Double? {
