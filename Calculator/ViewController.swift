@@ -111,22 +111,22 @@ class ViewController: UIViewController {
         operandStack = [Double]()
         userIsInTheMiddleOfTypingANumber = false
         userHasEnteredADot = false
+        println("Calculator has been reset")
     }
     
     @IBAction func backspace() {
         if countElements(display.text!) > 0 {
             display.text = dropLast(display.text!)
-            clearDisplay()
+            if display.text!.isEmpty {
+                userIsInTheMiddleOfTypingANumber = false
+                display.text = "0"
+            }
         }
     }
     
-    func clearDisplay() {
-        if display.text!.isEmpty {
-            userIsInTheMiddleOfTypingANumber = false
-            display.text = "0"
-        }
+    @IBAction func changeSign() {
+        displayValue = -(displayValue!)
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -242,11 +242,11 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="70w-61-opf">
                                 <rect key="frame" x="491" y="231" width="85" height="115"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" title="tan">
+                                <state key="normal" title="⁺/-">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="operrate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="g3e-5G-WNo"/>
+                                    <action selector="changeSign" destination="BYZ-38-t0r" eventType="touchUpInside" id="gXM-14-mek"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="brp-eL-Lkd">
