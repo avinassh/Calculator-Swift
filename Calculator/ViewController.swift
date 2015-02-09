@@ -64,22 +64,23 @@ class ViewController: UIViewController {
     }
     
     @IBAction func operrate(sender: UIButton) {
-        let operation = sender.currentTitle!
-        history.text! += operation + "|"
         if userIsInTheMiddleOfTypingANumber {
             enter()
-        }
-        switch operation {
-            case "÷": performOperation() { $1 / $0 }
-            case "×": performOperation() { $1 * $0 }
-            case "−": performOperation() { $1 - $0 }
-            case "+": performOperation() { $1 + $0 }
-            case "√": performOperation() { sqrt($0) }
-            case "x²": performOperation() { $0 * $0 }
-            case "sin": performOperation() { sin($0) }
-            case "cos": performOperation() { cos($0) }
-            case "tan": performOperation() { tan($0) }
-            default: break
+        }        
+        if let operation = sender.currentTitle {
+            history.text! += operation + "|"
+            switch operation {
+                case "÷": performOperation() { $1 / $0 }
+                case "×": performOperation() { $1 * $0 }
+                case "−": performOperation() { $1 - $0 }
+                case "+": performOperation() { $1 + $0 }
+                case "√": performOperation() { sqrt($0) }
+                case "x²": performOperation() { $0 * $0 }
+                case "sin": performOperation() { sin($0) }
+                case "cos": performOperation() { cos($0) }
+                case "tan": performOperation() { tan($0) }
+                default: break
+            }
         }
     }
     
