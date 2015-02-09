@@ -25,7 +25,7 @@ class CalculatorBrain {
     
     // init does not require func keyword
     init() {
-        knownOps["+"] = Op.BinaryOperation("+") { $1 + $1 }
+        knownOps["+"] = Op.BinaryOperation("+") { $1 + $0 }
         knownOps["−"] = Op.BinaryOperation("−") { $1 - $0 }
         knownOps["×"] = Op.BinaryOperation("×") { $1 * $0 }
         knownOps["÷"] = Op.BinaryOperation("÷") { $1 / $0 }
